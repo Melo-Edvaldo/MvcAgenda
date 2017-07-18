@@ -1,0 +1,63 @@
+@model MvcAgenda.Models.Agenda
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>Agenda</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="ClassName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ClassName" class="form-control" />
+                <span asp-validation-for="ClassName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ReleaseDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ReleaseDate" class="form-control" />
+                <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="HymnName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="HymnName" class="form-control" />
+                <span asp-validation-for="HymnName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="FirstPrayer" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="FirstPrayer" class="form-control" />
+                <span asp-validation-for="FirstPrayer" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastPrayer" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="LastPrayer" class="form-control" />
+                <span asp-validation-for="LastPrayer" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
