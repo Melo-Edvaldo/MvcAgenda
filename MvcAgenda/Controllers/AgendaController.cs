@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MvcAgenda.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 
 namespace MvcAgenda.Controllers
 {
@@ -12,31 +14,41 @@ namespace MvcAgenda.Controllers
 
         public AgendaController(MvcAgendaContext context)
         {
-            _context = context;    
+            _context = context;
         }
 
-        // GET: Agenda
-        public async Task<IActionResult> Index()
+        // Requires using Microsoft.AspNetCore.Mvc.Rendering;
+        public async Task<IActionResult> Index(string agendaHymnName, string searchString)
         {
-            return View(await _context.Agenda.ToListAsync());
+            // Use LINQ to get list of hymns name.
+            IQueryable<string> HymnNameQuery = from m in _context.Agenda
+                                               orderby m.HymnName
+                                               select m.HymnName;
+
+            var agenda = from m in _context.Agenda
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                agenda = agenda.Where(s => s.ClassName.Contains(searchString));
+            }
+
+            if (!String.IsNullOrEmpty(agendaHymnName))
+            {
+                agenda = agenda.Where(x => x.HymnName == agendaHymnName);
+            }
+
+            var agendaHymnNameVM = new AgendaHymnNameViewModel();
+            agendaHymnNameVM.HymnName = new SelectList(await HymnNameQuery.Distinct().ToListAsync());
+            agendaHymnNameVM.agenda = await agenda.ToListAsync();
+
+            return View(agendaHymnNameVM);
         }
 
-        // GET: Agenda/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [HttpPost]
+        public string Index(string searchString, bool notUsed)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var agenda = await _context.Agenda
-                .SingleOrDefaultAsync(m => m.ID == id);
-            if (agenda == null)
-            {
-                return NotFound();
-            }
-
-            return View(agenda);
+            return "From [HttpPost]Index: filter on " + searchString;
         }
 
         // GET: Agenda/Create
@@ -61,7 +73,7 @@ namespace MvcAgenda.Controllers
             return View(agenda);
         }
 
-        // GET: Agenda/Edit/5
+        // GET: Agenda/Edit
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,7 +89,7 @@ namespace MvcAgenda.Controllers
             return View(agenda);
         }
 
-        // POST: Agenda/Edit/5
+        // POST: Agenda/Edit
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -112,7 +124,7 @@ namespace MvcAgenda.Controllers
             return View(agenda);
         }
 
-        // GET: Agenda/Delete/5
+        // GET: Agenda/Delete
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,7 +142,7 @@ namespace MvcAgenda.Controllers
             return View(agenda);
         }
 
-        // POST: Agenda/Delete/5
+        // POST: Agenda/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

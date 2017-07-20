@@ -14,5 +14,6 @@ namespace MvcAgenda.Models
         }
 
         public DbSet<MvcAgenda.Models.Agenda> Agenda { get; set; }
+        public object Movie { get; internal set; }
     }
 }
