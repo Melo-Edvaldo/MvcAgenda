@@ -13,10 +13,10 @@
 <form asp-controller="Agenda" asp-action="Index" method="get">
     <p>
         <select asp-for="agendaHymnName" asp-items="Model.HymnName">
-            <option value="">All</option>
+            <option value="">Hymn Name</option>
         </select>
         
-        Title: <input type="text" name="SearchString">
+        Class Name: <input type="text" name="SearchString">
         <input type="submit" value="Filter" />
     </p>
 </form>
