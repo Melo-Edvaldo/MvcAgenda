@@ -51,6 +51,24 @@ namespace MvcAgenda.Controllers
             return "From [HttpPost]Index: filter on " + searchString;
         }
 
+        // GET: Agenda/Details
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var agenda = await _context.Agenda
+                .SingleOrDefaultAsync(m => m.ID == id);
+            if (agenda == null)
+            {
+                return NotFound();
+            }
+
+            return View(agenda);
+        }
+
         // GET: Agenda/Create
         public IActionResult Create()
         {
