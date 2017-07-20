@@ -7,7 +7,6 @@ namespace MvcAgenda.Models
     {
         public int ID { get; set; }
 
-        [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$")]
         [StringLength(100, MinimumLength = 10)]
         [Required]
         [Display(Name = "Class Name")]
