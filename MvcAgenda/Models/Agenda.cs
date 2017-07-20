@@ -16,7 +16,6 @@ namespace MvcAgenda.Models
         [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
 
-        [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$")]
         [Required]
         [StringLength(50, MinimumLength = 10)]
         [Display(Name = "Hymn Name")]
