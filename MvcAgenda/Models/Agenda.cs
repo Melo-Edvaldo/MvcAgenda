@@ -7,6 +7,9 @@ namespace MvcAgenda.Models
     {
         public int ID { get; set; }
 
+        [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$")]
+        [StringLength(100, MinimumLength = 10)]
+        [Required]
         [Display(Name = "Class Name")]
         public string ClassName { get; set; }
 
@@ -14,12 +17,21 @@ namespace MvcAgenda.Models
         [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
 
+        [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$")]
+        [Required]
+        [StringLength(50, MinimumLength = 10)]
         [Display(Name = "Hymn Name")]
         public string HymnName { get; set; }
 
+        [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$")]
+        [Required]
+        [StringLength(50, MinimumLength = 10)]
         [Display(Name = "First Prayer")]
         public string FirstPrayer { get; set; }
 
+        [RegularExpression(@"^[A-Z]+[a-zA-Z''-'\s]*$")]
+        [Required]
+        [StringLength(50, MinimumLength = 10)]
         [Display(Name = "Last Prayer")]
         public string LastPrayer { get; set; }
     }
